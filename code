@@ -1,0 +1,77 @@
+import numpy as np
+import time
+import sys
+import matplotlib.pyplot as plt
+
+sys.setrecursionlimit(1500)
+
+
+def partition(arr, low, high):
+    i = (low-1)
+    pivot = arr[high]
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i = i+1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return (i+1)
+
+
+def quickSort(arr, low, high):
+    if len(arr) == 1:
+        return arr
+    if low < high:
+        pi = partition(arr, low, high)
+        quickSort(arr, low, pi-1)
+        quickSort(arr, pi+1, high)
+
+
+def iniciar(array):
+    n = len(array)
+    quickSort(array, 0, n-1)
+
+
+arr1 = np.random.randint(1, 101, 2000)
+arr2 = np.random.randint(1, 101, 15000)
+arr3 = np.random.randint(1, 101, 30000)
+arr4 = np.random.randint(1, 101, 50000)
+arr5 = np.random.randint(1, 101, 100000)
+
+start = time.time()
+iniciar(arr1)
+end = time.time()
+time1 = end - start
+print("time1:", time1)
+
+start = time.time()
+iniciar(arr2)
+end = time.time()
+time2 = end - start
+print("time2:", time2)
+
+start = time.time()
+iniciar(arr3)
+end = time.time()
+time3 = end - start
+print("time3:", time3)
+
+
+start = time.time()
+iniciar(arr4)
+end = time.time()
+time4 = end - start
+print("time4:", time4)
+
+start = time.time()
+iniciar(arr5)
+end = time.time()
+time5 = end - start
+print("time5:", time5)
+
+
+y = ['Array 1(2k)', 'Array 2(15k)', 'Array 3(30k)',
+     'Array 4(50k)', 'Array 5(100k)']
+x = [time1, time2, time3, time4, time5]
+plt.plot(x, y)
+plt.grid()
+plt.show()
